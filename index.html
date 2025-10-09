@@ -318,7 +318,7 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 700;
             margin: 0 auto 24px;
         }
@@ -434,17 +434,6 @@
             transform: translateY(-8px);
         }
 
-        .process-step::after {
-            content: '';
-            position: absolute;
-            top: 40px;
-            right: -20px;
-            width: 40px;
-            height: 3px;
-            background: rgba(30, 55, 31, 0.3);
-            z-index: 1;
-        }
-
         .process-step:last-child::after {
             display: none;
         }
@@ -496,8 +485,29 @@
             color: white;
         }
 
+        .testimonials-carousel {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .testimonial-slide {
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+
         .testimonial-card {
             background: rgba(255,255,255,0.1);
+	    max-width: 100%;  
             padding: 60px;
             border-radius: 24px;
             margin-bottom: 60px;
@@ -514,7 +524,16 @@
             line-height: 1.5;
             margin-bottom: 30px;
             font-weight: 300;
+  	    white-space: normal;     /* permite salto de línea */
+ 	    overflow-wrap: anywhere; /* fuerza corte si es necesario */
+ 	    word-break: break-word;  /* compat extra */
+	    hyphens: auto;           /* agrega guiones si aplica */
         }
+
+.carousel-container { width: 100%; }
+.carousel-track { display: flex; }
+.testimonial-slide { flex: 0 0 100%; min-width: 100%; }
+
 
         .testimonial-author {
             display: flex;
@@ -596,6 +615,68 @@
         .showcase-stat-label {
             font-size: 12px;
             opacity: 0.8;
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .carousel-btn {
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background: #CBFF1F;
+            color: #1E371F;
+            border-color: #CBFF1F;
+            transform: scale(1.1);
+        }
+
+        .carousel-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .carousel-btn:disabled:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: scale(1);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #CBFF1F;
+            width: 24px;
+            border-radius: 5px;
         }
 
         /* Contact Section */
@@ -931,6 +1012,11 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+.testimonial-card { width: 100%; }
+.testimonial-text { word-break: break-word; hyphens: auto; }
+
+
     </style>
 </head>
 <body>
@@ -972,8 +1058,6 @@
                     <div class="hero-card">
                         <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #1E371F;">Nuestros Servicios</h3>
                         <ul style="list-style: none; font-size: 14px; color: #666; line-height: 1.8;">
-                            <li><i class="fas fa-check" style="color: #CBFF1F; margin-right: 8px;"></i>Social Media Management</li>
-                            <li><i class="fas fa-check" style="color: #CBFF1F; margin-right: 8px;"></i>Branding Completo</li>
                             <li><i class="fas fa-check" style="color: #CBFF1F; margin-right: 8px;"></i>UGC & Contenido Visual</li>
                             <li><i class="fas fa-check" style="color: #CBFF1F; margin-right: 8px;"></i>Paid Media Multicanal</li>
                         </ul>
@@ -1008,12 +1092,11 @@
                         </div>
 
                         <div class="founder-card animate">
-                            <div class="founder-avatar" style="background:none;padding:0;">
-                                <img src="imagenes/Natalia.png" alt="Natalia Vargas"
-                                     style="width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid #CBFF1F;">
+                            <div class="founder-avatar">
+                                <i class="fas fa-trophy"></i>
                             </div>
-                            <h3 class="founder-name">Natalia Vargas</h3>
-                            <p class="founder-bio">Joven emprendedora de 25 años con amplia experiencia en marketing digital. Ha creado y llevado a cabo varios emprendimientos, especializándose en paid media y estrategia digital.</p>
+                            <h3 class="founder-name">Nuestros Valores</h3>
+                            <p class="founder-bio">Innovación constante, transparencia total, resultados medibles y acompañamiento personalizado. Cada proyecto es único y merece una estrategia diseñada específicamente para alcanzar sus objetivos.</p>
                         </div>
                     </div>
                 </div>
@@ -1097,47 +1180,107 @@
         </div>
     </section>
 
-    <!-- Client Section -->
-    <section id="clientes" class="client">
-        <div class="container">
-            <h2 class="section-title animate">Nuestros Clientes</h2>
-            <p class="section-subtitle animate">Casos de éxito que demuestran nuestro compromiso</p>
-            
+<!-- Client Section -->
+<section id="clientes" class="client">
+  <div class="container">
+    <h2 class="section-title animate">Nuestros Clientes</h2>
+    <p class="section-subtitle animate">Casos de éxito que demuestran nuestro compromiso</p>
+
+    <div class="testimonials-carousel">
+      <div class="carousel-container">
+        <div class="carousel-track" id="carouselTrack">
+          <!-- Testimonio 1: Service -->
+          <div class="testimonial-slide">
             <div class="testimonial-card animate">
-                <p class="testimonial-text">"Estoy muy feliz con MonSenior Agency. A pesar de ser la primera vez trabajando con una agencia, vemos un cambio significativo en nuestra presencia digital."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">TL</div>
-                    <div class="author-info">
-                        <h4>Tatiana López</h4>
-                        <p>CEO - Service & Travel</p>
-                    </div>
+              <p class="testimonial-text">"Estoy muy feliz con MonSenior Agency. A pesar de ser la primera vez trabajando con una agencia, vemos un cambio significativo en nuestra presencia digital."</p>
+              <div class="testimonial-author">
+                <div class="author-avatar">TL</div>
+                <div class="author-info">
+                  <h4>Tatiana</h4>
+                  <p>CEO de Service</p>
                 </div>
+              </div>
             </div>
-            
+
             <div class="client-showcase animate">
-                <div class="showcase-content">
-                    <h3>Service & Travel</h3>
-                    <p class="showcase-description">Empresa de transporte que confió en nosotros para transformar completamente su presencia digital y establecer una identidad visual sólida en todas las plataformas.</p>
-                    <p style="font-size: 16px; opacity: 0.8;">Actualmente trabajamos en la implementación completa de su estrategia de marketing digital, incluyendo paid media con resultados prometedores.</p>
+              <div class="showcase-content">
+                <h3>Service</h3>
+                <p class="showcase-description">Empresa de transporte que confió en nosotros para transformar su presencia digital y establecer una identidad visual sólida en todas las plataformas.</p>
+                <p style="font-size: 16px; opacity: 0.8;">Actualmente trabajamos en la implementación completa de su estrategia de marketing digital, incluyendo paid media con resultados prometedores.</p>
+              </div>
+
+              <div class="showcase-stats">
+                <div class="showcase-stat">
+                  <span class="showcase-stat-number">100</span>
+                  <span class="showcase-stat-label">% Brand Book Completo</span>
                 </div>
-                
-                <div class="showcase-stats">
-                    <div class="showcase-stat">
-                        <span class="showcase-stat-number">100</span>
-                        <span class="showcase-stat-label">% Brand Book Completo</span>
-                    </div>
-                    <div class="showcase-stat">
-                        <span class="showcase-stat-number">5</span>
-                        <span class="showcase-stat-label">+ Plataformas Optimizadas</span>
-                    </div>
-                    <div class="showcase-stat">
-                        <span class="showcase-stat-number">1</span>
-                        <span class="showcase-stat-label">+ Mes Colaborando</span>
-                    </div>
+                <div class="showcase-stat">
+                  <span class="showcase-stat-number">5</span>
+                  <span class="showcase-stat-label">+ Plataformas Optimizadas</span>
                 </div>
+                <div class="showcase-stat">
+                  <span class="showcase-stat-number">1</span>
+                  <span class="showcase-stat-label">+ Mes Colaborando</span>
+                </div>
+              </div>
             </div>
-        </div>
-    </section>
+          </div>
+
+          <!-- Testimonio 2: Latamtech -->
+          <div class="testimonial-slide">
+            <div class="testimonial-card animate">
+              <p class="testimonial-text">"MonSenior Agency logró capturar la esencia de nuestra marca tech y transformarla en una estrategia digital coherente y efectiva que realmente genera impacto."</p>
+              <div class="testimonial-author">
+                <div class="author-avatar">CG</div>
+                <div class="author-info">
+                  <h4>Carol</h4>
+                  <p>Gerente de Latamtech</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="client-showcase animate">
+              <div class="showcase-content">
+                <h3>Latamtech</h3>
+                <p class="showcase-description">Empresa tecnológica que renovó su presencia digital con una estrategia moderna y orientada a resultados en el sector tech latinoamericano.</p>
+                <p style="font-size: 16px; opacity: 0.8;">Implementamos una estrategia integral de contenido, branding y paid media que posicionó a Latamtech como referente en innovación tecnológica.</p>
+              </div>
+
+              <div class="showcase-stats">
+                <div class="showcase-stat">
+                  <span class="showcase-stat-number">200</span>
+                  <span class="showcase-stat-label">% Aumento en Engagement</span>
+                </div>
+                <div class="showcase-stat">
+                  <span class="showcase-stat-number">3</span>
+                  <span class="showcase-stat-label">+ Canales Digitales</span>
+                </div>
+                <div class="showcase-stat">
+                  <span class="showcase-stat-number">2</span>
+                  <span class="showcase-stat-label">+ Meses de Crecimiento</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- /carousel-track -->
+      </div> <!-- /carousel-container -->
+
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="prevBtn" aria-label="Anterior">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-btn" id="nextBtn" aria-label="Siguiente">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+  </div>
+</section>
+
+
 
     <!-- Contact Section -->
     <section id="contacto" class="contact">
@@ -1323,114 +1466,195 @@
         </div>
     </footer>
 
-    <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerHeight = document.querySelector('header').offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight - 20;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+  <script>
+  // Smooth scrolling
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const headerHeight = document.querySelector('header').offsetHeight;
+        const targetPosition = target.offsetTop - headerHeight - 20;
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      }
+    });
+  });
 
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(248, 253, 248, 0.98)';
-                header.style.boxShadow = '0 4px 20px rgba(30, 55, 31, 0.1)';
-            } else {
-                header.style.background = 'rgba(248, 253, 248, 0.95)';
-                header.style.boxShadow = 'none';
-            }
-        });
+  // Header scroll effect
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 100) {
+      header.style.background = 'rgba(248, 253, 248, 0.98)';
+      header.style.boxShadow = '0 4px 20px rgba(30, 55, 31, 0.1)';
+    } else {
+      header.style.background = 'rgba(248, 253, 248, 0.95)';
+      header.style.boxShadow = 'none';
+    }
+  });
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+  // Intersection Observer for animations
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, observerOptions);
+  document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+  // Mobile menu
+  function createMobileMenu() {
+    const nav = document.querySelector('nav');
+    const menuButton = document.createElement('button');
+    menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+    menuButton.style.cssText = `
+      display: none;background: none;border: none;font-size: 20px;color: #1E371F;cursor: pointer;padding: 8px;`;
+    const navMenu = document.querySelector('.nav-menu');
+    let isOpen = false;
+    menuButton.addEventListener('click', () => {
+      isOpen = !isOpen;
+      if (isOpen) {
+        navMenu.style.display = 'flex';
+        navMenu.style.flexDirection = 'column';
+        navMenu.style.position = 'absolute';
+        navMenu.style.top = '100%';
+        navMenu.style.left = '0';
+        navMenu.style.right = '0';
+        navMenu.style.background = 'rgba(248, 253, 248, 0.98)';
+        navMenu.style.padding = '20px';
+        navMenu.style.boxShadow = '0 10px 30px rgba(30, 55, 31, 0.1)';
+        menuButton.innerHTML = '<i class="fas fa-times"></i>';
+      } else {
+        navMenu.style.display = 'none';
+        menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    });
+    nav.appendChild(menuButton);
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    function handleResize(e) {
+      if (e.matches) {
+        menuButton.style.display = 'block';
+        navMenu.style.display = 'none';
+      } else {
+        menuButton.style.display = 'none';
+        navMenu.style.display = 'flex';
+        navMenu.style.position = 'static';
+        navMenu.style.flexDirection = 'row';
+        navMenu.style.background = 'transparent';
+        navMenu.style.padding = '0';
+        navMenu.style.boxShadow = 'none';
+      }
+    }
+    mediaQuery.addEventListener('change', handleResize);
+    handleResize(mediaQuery);
+  }
+  createMobileMenu();
 
-        document.querySelectorAll('.animate').forEach(el => {
-            observer.observe(el);
-        });
+  // ===== Carousel functionality =====
+  const track = document.getElementById('carouselTrack');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const dotsContainer = document.getElementById('carouselDots');
+  const slides = document.querySelectorAll('.testimonial-slide');
+  let currentSlide = 0;
+  const totalSlides = slides.length;
 
-        // Mobile menu
-        function createMobileMenu() {
-            const nav = document.querySelector('nav');
-            const menuButton = document.createElement('button');
-            menuButton.innerHTML = '<i class="fas fa-bars"></i>';
-            menuButton.style.cssText = `
-                display: none;
-                background: none;
-                border: none;
-                font-size: 20px;
-                color: #1E371F;
-                cursor: pointer;
-                padding: 8px;
-            `;
-            
-            const navMenu = document.querySelector('.nav-menu');
-            let isOpen = false;
-            
-            menuButton.addEventListener('click', () => {
-                isOpen = !isOpen;
-                if (isOpen) {
-                    navMenu.style.display = 'flex';
-                    navMenu.style.flexDirection = 'column';
-                    navMenu.style.position = 'absolute';
-                    navMenu.style.top = '100%';
-                    navMenu.style.left = '0';
-                    navMenu.style.right = '0';
-                    navMenu.style.background = 'rgba(248, 253, 248, 0.98)';
-                    navMenu.style.padding = '20px';
-                    navMenu.style.boxShadow = '0 10px 30px rgba(30, 55, 31, 0.1)';
-                    menuButton.innerHTML = '<i class="fas fa-times"></i>';
-                } else {
-                    navMenu.style.display = 'none';
-                    menuButton.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-            });
-            
-            nav.appendChild(menuButton);
-            
-            const mediaQuery = window.matchMedia('(max-width: 768px)');
-            function handleResize(e) {
-                if (e.matches) {
-                    menuButton.style.display = 'block';
-                    navMenu.style.display = 'none';
-                } else {
-                    menuButton.style.display = 'none';
-                    navMenu.style.display = 'flex';
-                    navMenu.style.position = 'static';
-                    navMenu.style.flexDirection = 'row';
-                    navMenu.style.background = 'transparent';
-                    navMenu.style.padding = '0';
-                    navMenu.style.boxShadow = 'none';
-                }
-            }
-            
-            mediaQuery.addListener(handleResize);
-            handleResize(mediaQuery);
-        }
-        
-        createMobileMenu();
-    </script>
+  const containerEl = document.querySelector('.carousel-container');
+  containerEl.style.transition = 'height 0.4s ease';
+
+  function setContainerHeight() {
+    const activeSlide = slides[currentSlide];
+    if (!activeSlide) return;
+    containerEl.style.height = activeSlide.offsetHeight + 'px';
+  }
+
+  // Create dots
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.classList.add('carousel-dot');
+    if (i === 0) dot.classList.add('active');
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+  const dots = document.querySelectorAll('.carousel-dot');
+
+  function updateCarousel() {
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+    // Actualiza dots
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentSlide);
+    });
+
+    // Estados de botones
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === totalSlides - 1;
+
+    // Ajusta altura del contenedor
+    setContainerHeight();
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    updateCarousel();
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (currentSlide > 0) {
+      currentSlide--;
+      updateCarousel();
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      updateCarousel();
+    }
+  });
+
+  // Auto-advance carousel
+  let carouselInterval = setInterval(() => {
+    currentSlide = currentSlide < totalSlides - 1 ? currentSlide + 1 : 0;
+    updateCarousel();
+  }, 7000);
+
+  // Pause auto-advance on hover
+  const carouselContainer = document.querySelector('.testimonials-carousel');
+  carouselContainer.addEventListener('mouseenter', () => clearInterval(carouselInterval));
+  carouselContainer.addEventListener('mouseleave', () => {
+    carouselInterval = setInterval(() => {
+      currentSlide = currentSlide < totalSlides - 1 ? currentSlide + 1 : 0;
+      updateCarousel();
+    }, 7000);
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && currentSlide > 0) {
+      currentSlide--;
+      updateCarousel();
+    } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
+      currentSlide++;
+      updateCarousel();
+    }
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0, touchEndX = 0;
+  track.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+  track.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    if (touchEndX < touchStartX - 50 && currentSlide < totalSlides - 1) {
+      currentSlide++; updateCarousel();
+    }
+    if (touchEndX > touchStartX + 50 && currentSlide > 0) {
+      currentSlide--; updateCarousel();
+    }
+  });
+
+  // Inicializa
+  window.addEventListener('load', setContainerHeight);
+setTimeout(setContainerHeight, 0); // re-mide tras el layout final
+  window.addEventListener('resize', setContainerHeight);
+  updateCarousel();
+</script>
 </body>
-</html>founder-title">Co-fundadora de MonSenior Agency</p>
-                            <p class="
+</html>
